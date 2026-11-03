@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#1356c6">
+  <meta name="description" content="Простой прогноз спроса и расчёт товаров к заказу по CSV-файлу продаж.">
+  <title>Спросометр — прогноз спроса</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar"><div class="shell topbar-inner"><div class="brand"><span class="brand-mark">◈</span><span>Спросометр</span></div><span class="top-note">Прогноз для небольшого магазина</span></div></header>
+  <main class="shell">
+    <section class="hero">
+      <div><p class="eyebrow">ПЛАНИРОВАНИЕ ЗАКУПОК</p><h1>Знайте, сколько<br><span>заказать завтра.</span></h1><p class="intro">Загрузите продажи и остатки. Получите понятный прогноз и список товаров к заказу — без подключения к кассе и без регистрации.</p></div>
+      <div class="hero-aside"><span class="hero-icon">↗</span><strong>3 шага</strong><span>Продажи → Остатки → Результат</span><small>Файлы остаются в вашем браузере</small></div>
+    </section>
+    <section class="workspace" aria-label="Расчёт спроса">
+      <div class="section-heading"><div><p class="eyebrow">НАЧНИТЕ С ДАННЫХ</p><h2>Новый расчёт</h2></div><button class="text-button" id="load-demo" type="button">Загрузить пример ↗</button></div>
+      <div class="upload-grid">
+        <label class="upload-card" for="sales-file"><span class="step">01</span><span class="upload-copy"><strong>Продажи CSV <em>*</em></strong><small>date, sku, quantity · UTF-8</small><span id="sales-name">Файл не выбран</span></span><span class="upload-action">Выбрать файл</span><input id="sales-file" type="file" accept=".csv,text/csv"></label>
+        <label class="upload-card" for="stocks-file"><span class="step">02</span><span class="upload-copy"><strong>Остатки CSV</strong><small>sku, stock, lead_days · UTF-8</small><span id="stocks-name">Можно заполнить в таблице</span></span><span class="upload-action">Выбрать файл</span><input id="stocks-file" type="file" accept=".csv,text/csv"></label>
+      </div>
+      <div class="parameters"><div class="field"><label for="history">Окно истории</label><div class="input-with-suffix"><input id="history" type="number" min="1" max="366" value="28"><span>дней</span></div></div><div class="field"><label for="horizon">Горизонт прогноза</label><div class="input-with-suffix"><input id="horizon" type="number" min="1" max="365" value="7"><span>дней</span></div></div><div class="field"><label for="lead">Срок поставки по умолчанию</label><div class="input-with-suffix"><input id="lead" type="number" min="1" max="365" value="7"><span>дней</span></div></div><button id="calculate" class="primary-button" type="button">Рассчитать прогноз <span>→</span></button></div>
+      <div id="messages" class="messages" aria-live="polite"></div>
+    </section>
+    <section class="results" id="results-section" aria-label="Результаты расчёта">
+      <div class="section-heading results-heading"><div><p class="eyebrow">РЕЗУЛЬТАТ</p><h2>Что заказать</h2><p id="reference-date" class="muted">Загрузите продажи, чтобы увидеть прогноз.</p></div><button id="export" class="secondary-button" type="button" disabled>Скачать CSV ↓</button></div>
+      <div class="metrics"><div class="metric"><small>Товаров</small><strong id="metric-products">—</strong></div><div class="metric"><small>Единиц к заказу</small><strong id="metric-order">—</strong></div><div class="metric"><small>Нужна проверка</small><strong id="metric-warning">—</strong></div></div>
+      <div class="table-tools"><label class="search"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Найти товар или SKU" aria-label="Найти товар или SKU"></label><label class="sort-label" for="sort">Сортировка <span class="select-wrap"><select id="sort"><option value="order">Сначала к заказу</option><option value="sku">По названию</option><option value="sold">По продажам</option></select></span></label></div>
+      <div class="table-scroll"><table><thead><tr><th>Товар / SKU</th><th>Продано</th><th>Спрос / день</th><th>Прогноз</th><th>Остаток</th><th>Поставка, дн.</th><th>К заказу</th><th>Пояснение</th></tr></thead><tbody id="result-body"><tr><td colspan="8" class="empty">Здесь появится таблица после расчёта.</td></tr></tbody></table></div>
+      <p class="footnote">Базовая оценка по среднему спросу. Сезонность, акции и тренды не учитываются. Если история короче выбранного окна или остаток не заполнен, рекомендация к заказу не считается достоверной.</p>
+    </section>
+  </main>
+  <footer class="shell footer"><span>Спросометр · демонстрационный MVP</span><span>Расчёт выполняется только в браузере</span></footer>
+  <script type="module" src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+{
+  "name": "demand-forecast-web",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node forecast.test.mjs"
+  }
+}
